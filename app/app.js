@@ -4,8 +4,8 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 
-const authRoutes = require('./Auth');
-const patientRoutes = require('./Patients');
+const authRoutes = require('./auth');
+const patientRoutes = require('./patients');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
