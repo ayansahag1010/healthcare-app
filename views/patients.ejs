@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Patients — MediCare HMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+
+<%- include('partials/navbar') %>
+
+<main class="main-content">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Patient Records</h1>
+      <p class="page-subtitle"><%= patients.length %> patients on record · Demo data only</p>
+    </div>
+    <a href="/patients/new" class="btn btn-primary">+ Add Patient</a>
+  </div>
+
+  <% if (success) { %>
+    <div class="alert alert-success" role="alert">
+      <span class="alert-icon">✓</span>
+      <!-- SECURITY: success message comes from a server-controlled redirect param, not raw user input -->
+      <%- success %>
+    </div>
+  <% } %>
+
+  <div class="card">
+    <div class="table-wrap">
+      <table class="table" id="patientsTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Diagnosis</th>
+            <th>Ward</th>
+            <th>Doctor</th>
+            <th>Status</th>
+            <th>Admitted</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% patients.forEach(function(p) { %>
+          <tr>
+            <!-- SECURITY: All values escaped by EJS <%= %> — prevents XSS -->
+            <td><code><%= p.id %></code></td>
+            <td class="patient-name"><%= p.name %></td>
+            <td><%= p.age %></td>
+            <td><%= p.gender %></td>
+            <td><%= p.diagnosis %></td>
+            <td><%= p.ward %></td>
+            <td><%= p.doctor %></td>
+            <td>
+              <span class="badge badge-<%= p.status.toLowerCase().replace(' ', '-') %>">
+                <%= p.status %>
+              </span>
+            </td>
+            <td><%= p.admittedOn %></td>
+            <td>
+              <a href="/patients/<%= p.id %>" class="btn btn-sm btn-outline">View</a>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<script src="/js/main.js"></script>
+</body>
+</html>

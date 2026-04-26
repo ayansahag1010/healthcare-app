@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login — MediCare HMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body class="login-page">
+
+<div class="login-split">
+  <div class="login-brand">
+    <div class="brand-inner">
+      <div class="brand-icon">⚕</div>
+      <h1 class="brand-name">MediCare<span>HMS</span></h1>
+      <p class="brand-tagline">Healthcare Management System</p>
+      <div class="brand-features">
+        <div class="feature-pill">Patient Records</div>
+        <div class="feature-pill">Ward Management</div>
+        <div class="feature-pill">Clinical Workflows</div>
+      </div>
+      <p class="demo-note">DevSecOps Demo · Dummy Data Only</p>
+    </div>
+  </div>
+
+  <div class="login-form-panel">
+    <div class="login-form-wrap">
+      <div class="login-header">
+        <h2>Welcome back</h2>
+        <p>Sign in to access the patient portal</p>
+      </div>
+
+      <% if (error) { %>
+        <!-- SECURITY: Error message is server-generated, not user input reflected -->
+        <div class="alert alert-error" role="alert">
+          <span class="alert-icon">⚠</span>
+          <%- error %>
+        </div>
+      <% } %>
+
+      <!-- SECURITY: action is a hard-coded path, not user-supplied -->
+      <form class="form" method="POST" action="/auth/login" autocomplete="off" novalidate>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <!-- SECURITY: maxlength enforced client-side AND server-side -->
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="form-control"
+            maxlength="50"
+            required
+            autocomplete="username"
+            placeholder="Enter username"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-control"
+            maxlength="100"
+            required
+            autocomplete="current-password"
+            placeholder="Enter password"
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+      </form>
+
+      <div class="login-hint">
+        <p><strong>Demo credentials</strong></p>
+        <code>admin / Admin@1234</code><br/>
+        <code>doctor / Doctor@5678</code>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

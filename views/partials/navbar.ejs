@@ -1,0 +1,19 @@
+<nav class="navbar">
+  <div class="nav-brand">
+    <span class="nav-icon">⚕</span>
+    <span class="nav-title">MediCare <strong>HMS</strong></span>
+  </div>
+  <div class="nav-links">
+    <a href="/patients" class="nav-link">Patients</a>
+    <a href="/patients/new" class="nav-link">Add Patient</a>
+  </div>
+  <div class="nav-user">
+    <span class="user-badge">
+      <%= user.displayName %> (<%= user.role %>)
+    </span>
+    <!-- SECURITY: Logout uses POST to prevent CSRF via GET links -->
+    <form method="POST" action="/auth/logout" style="display:inline;">
+      <button type="submit" class="btn btn-sm btn-ghost">Logout</button>
+    </form>
+  </div>
+</nav>

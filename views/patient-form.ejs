@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Patient — MediCare HMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+
+<%- include('partials/navbar') %>
+
+<main class="main-content">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Add New Patient</h1>
+      <p class="page-subtitle">All fields are required · Dummy data only</p>
+    </div>
+    <a href="/patients" class="btn btn-outline">← Back to Patients</a>
+  </div>
+
+  <% if (errors.length > 0) { %>
+    <div class="alert alert-error" role="alert">
+      <span class="alert-icon">⚠</span>
+      <ul class="error-list">
+        <!-- SECURITY: errors are server-generated strings, not reflected user input -->
+        <% errors.forEach(function(e) { %>
+          <li><%- e %></li>
+        <% }) %>
+      </ul>
+    </div>
+  <% } %>
+
+  <div class="card form-card">
+    <!-- SECURITY: POST method, no action URL manipulation possible -->
+    <form method="POST" action="/patients" class="form" novalidate>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <!-- SECURITY: maxlength enforced client + server; value escaped with ternary -->
+          <input type="text" id="name" name="name" class="form-control"
+            maxlength="100" required placeholder="e.g. Jane Doe"
+            value="<%= typeof form.name !== 'undefined' ? form.name.replace(/[<>"'`]/g,'') : '' %>" />
+        </div>
+
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input type="number" id="age" name="age" class="form-control"
+            min="0" max="130" required placeholder="e.g. 45"
+            value="<%= typeof form.age !== 'undefined' ? parseInt(form.age)||'' : '' %>" />
+        </div>
+
+        <!-- SECURITY: Gender is a <select> with server-side allowlist validation -->
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select id="gender" name="gender" class="form-control" required>
+            <option value="">Select gender</option>
+            <% ALLOWED_GENDERS.forEach(function(g) { %>
+              <option value="<%= g %>" <%= (form.gender === g ? 'selected' : '') %>><%= g %></option>
+            <% }) %>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="diagnosis">Diagnosis</label>
+          <input type="text" id="diagnosis" name="diagnosis" class="form-control"
+            maxlength="150" required placeholder="e.g. Hypertension"
+            value="<%= typeof form.diagnosis !== 'undefined' ? form.diagnosis.replace(/[<>"'`]/g,'') : '' %>" />
+        </div>
+
+        <div class="form-group">
+          <label for="doctor">Attending Doctor</label>
+          <input type="text" id="doctor" name="doctor" class="form-control"
+            maxlength="100" required placeholder="e.g. Dr. Smith"
+            value="<%= typeof form.doctor !== 'undefined' ? form.doctor.replace(/[<>"'`]/g,'') : '' %>" />
+        </div>
+
+        <!-- SECURITY: Ward is a <select> with server-side allowlist validation -->
+        <div class="form-group">
+          <label for="ward">Ward</label>
+          <select id="ward" name="ward" class="form-control" required>
+            <option value="">Select ward</option>
+            <% ALLOWED_WARDS.forEach(function(w) { %>
+              <option value="<%= w %>" <%= (form.ward === w ? 'selected' : '') %>><%= w %></option>
+            <% }) %>
+          </select>
+        </div>
+
+        <!-- SECURITY: Status is a <select> with server-side allowlist validation -->
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select id="status" name="status" class="form-control" required>
+            <option value="">Select status</option>
+            <% ALLOWED_STATUSES.forEach(function(s) { %>
+              <option value="<%= s %>" <%= (form.status === s ? 'selected' : '') %>><%= s %></option>
+            <% }) %>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="admittedOn">Admission Date</label>
+          <!-- SECURITY: date type restricts input format; server validates YYYY-MM-DD regex -->
+          <input type="date" id="admittedOn" name="admittedOn" class="form-control"
+            required value="<%= typeof form.admittedOn !== 'undefined' ? form.admittedOn.replace(/[^0-9\-]/g,'') : '' %>" />
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <a href="/patients" class="btn btn-outline">Cancel</a>
+        <button type="submit" class="btn btn-primary">Save Patient</button>
+      </div>
+    </form>
+  </div>
+</main>
+
+<script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title><%= patient.name %> — MediCare HMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+
+<%- include('partials/navbar') %>
+
+<main class="main-content">
+  <div class="page-header">
+    <div>
+      <!-- SECURITY: All values output via EJS <%= %> — auto-escaped -->
+      <h1 class="page-title"><%= patient.name %></h1>
+      <p class="page-subtitle">Patient ID: <code><%= patient.id %></code></p>
+    </div>
+    <a href="/patients" class="btn btn-outline">← Back to Patients</a>
+  </div>
+
+  <div class="detail-grid">
+    <div class="card detail-card">
+      <h2 class="card-title">Patient Information</h2>
+      <dl class="detail-list">
+        <dt>Full Name</dt>      <dd><%= patient.name %></dd>
+        <dt>Age</dt>            <dd><%= patient.age %> years</dd>
+        <dt>Gender</dt>         <dd><%= patient.gender %></dd>
+        <dt>Admission Date</dt> <dd><%= patient.admittedOn %></dd>
+      </dl>
+    </div>
+
+    <div class="card detail-card">
+      <h2 class="card-title">Clinical Details</h2>
+      <dl class="detail-list">
+        <dt>Diagnosis</dt>       <dd><%= patient.diagnosis %></dd>
+        <dt>Attending Doctor</dt><dd><%= patient.doctor %></dd>
+        <dt>Ward</dt>            <dd><%= patient.ward %></dd>
+        <dt>Status</dt>
+        <dd>
+          <span class="badge badge-<%= patient.status.toLowerCase().replace(' ','-') %>">
+            <%= patient.status %>
+          </span>
+        </dd>
+      </dl>
+    </div>
+  </div>
+</main>
+
+<script src="/js/main.js"></script>
+</body>
+</html>
